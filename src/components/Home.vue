@@ -15,16 +15,46 @@
         I am a Front-End / Full-Stack Developer. I am currently working at
         Recruit CRM as an Intern.
       </div>
+      <div class="mt-6 space-x-2 text-xl text-slate-600">
+        <a href="https://github.com/sagnik6969" target="_blank">
+          <v-icon
+            class="hover:text-blue-700 duration-300 hover:scale-125"
+            icon="mdi-github"
+          ></v-icon>
+        </a>
+        <a
+          href="https://www.linkedin.com/in/sagnik-jana-3452771ba/"
+          target="_blank"
+        >
+          <v-icon
+            class="hover:text-blue-700 duration-300 hover:scale-125"
+            icon="mdi-linkedin"
+          ></v-icon>
+        </a>
+        <a href="https://leetcode.com/sagnikjana2001/" target="_blank">
+          <v-icon
+            class="hover:text-blue-700 duration-300 hover:scale-125"
+            icon="mdi-code-tags"
+          ></v-icon>
+        </a>
+        <a href="https://twitter.com/sagnikjana2001" target="_blank">
+          <v-icon
+            class="hover:text-blue-700 duration-300 hover:scale-125"
+            icon="mdi-twitter"
+          ></v-icon>
+        </a>
+      </div>
       <div class="space-x-4 mt-6 font-semibold">
         <button
-          class="rounded-md py-2 px-3 bg-slate-700 text-white hover:opacity-85 duration-300"
+          @click="openMailLink"
+          class="rounded-md py-2 px-3 bg-slate-700 text-white hover:scale-110 duration-300"
         >
           <v-icon icon="mdi-email"></v-icon>
           Connect
         </button>
         <button
           @click="openResumeLink"
-          class="rounded-md py-2 px-3 bg-slate-300 text-blue-950 hover:bg-indigo-900 hover:text-white duration-300"
+          class="rounded-md py-2 px-3 bg-slate-300 text-blue-950 hover:scale-110 duration-300"
         >
           <v-icon icon="mdi-tray-arrow-down"></v-icon>
           Resume
@@ -83,6 +113,10 @@ const openResumeLink = () => {
       "_blank"
     )
     .focus();
+};
+
+const openMailLink = () => {
+  window.open("mailto:sagnikjana2001@gmail.com", "_blank").focus();
 };
 </script>
 
