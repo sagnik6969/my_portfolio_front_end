@@ -1,65 +1,63 @@
 <template>
-  <div class="">
-    <div class="container py-28 text-slate-800">
-      <div class="text-3xl mb-2">Hello! 👋 I am</div>
-      <div class="text-8xl font-semibold pb-5 mb-5 text-blue-900">
-        Sagnik Jana
-      </div>
-      <div class="mb-8 text-4xl font-semibold w-2/3 text-slate-600">
-        I am a <span class="text-blue-600">{{ typedTextSpan }}</span
-        ><span class="ml-2" :class="{ cursor: true, typing: typing }">
-          &nbsp;</span
-        >
-      </div>
-      <div class="text-2xl w-2/3 text-slate-700">
-        I am a Front-End / Full-Stack Developer. I am currently working at
-        Recruit CRM as an Intern.
-      </div>
-      <div class="mt-6 space-x-2 text-xl text-slate-600">
-        <a href="https://github.com/sagnik6969" target="_blank">
-          <v-icon
-            class="hover:text-blue-700 duration-300 hover:scale-125"
-            icon="mdi-github"
-          ></v-icon>
-        </a>
-        <a
-          href="https://www.linkedin.com/in/sagnik-jana-3452771ba/"
-          target="_blank"
-        >
-          <v-icon
-            class="hover:text-blue-700 duration-300 hover:scale-125"
-            icon="mdi-linkedin"
-          ></v-icon>
-        </a>
-        <a href="https://leetcode.com/sagnikjana2001/" target="_blank">
-          <v-icon
-            class="hover:text-blue-700 duration-300 hover:scale-125"
-            icon="mdi-code-tags"
-          ></v-icon>
-        </a>
-        <a href="https://twitter.com/sagnikjana2001" target="_blank">
-          <v-icon
-            class="hover:text-blue-700 duration-300 hover:scale-125"
-            icon="mdi-twitter"
-          ></v-icon>
-        </a>
-      </div>
-      <div class="space-x-4 mt-6 font-semibold">
-        <button
-          @click="openMailLink"
-          class="rounded-md py-2 px-3 bg-slate-700 text-white hover:scale-110 duration-300"
-        >
-          <v-icon icon="mdi-email"></v-icon>
-          Connect
-        </button>
-        <button
-          @click="openResumeLink"
-          class="rounded-md py-2 px-3 bg-slate-300 text-blue-950 hover:scale-110 duration-300"
-        >
-          <v-icon icon="mdi-tray-arrow-down"></v-icon>
-          Resume
-        </button>
-      </div>
+  <div class="container py-28 text-slate-800">
+    <div class="text-3xl mb-2">Hello! 👋 I am</div>
+    <div class="text-8xl font-semibold pb-5 mb-5 text-blue-900">
+      Sagnik Jana
+    </div>
+    <div class="mb-8 text-4xl font-semibold w-2/3 text-slate-600">
+      I am a <span class="text-blue-600">{{ typedTextSpan }}</span
+      ><span class="ml-2" :class="{ cursor: true, typing: typing }">
+        &nbsp;</span
+      >
+    </div>
+    <div class="text-2xl w-2/3 text-slate-700">
+      I am a Front-End / Full-Stack Developer. I am currently working at Recruit
+      CRM as an Intern.
+    </div>
+    <div class="mt-6 space-x-2 text-xl text-slate-600">
+      <a href="https://github.com/sagnik6969" target="_blank">
+        <v-icon
+          class="hover:text-blue-700 duration-300 hover:scale-125"
+          icon="mdi-github"
+        ></v-icon>
+      </a>
+      <a
+        href="https://www.linkedin.com/in/sagnik-jana-3452771ba/"
+        target="_blank"
+      >
+        <v-icon
+          class="hover:text-blue-700 duration-300 hover:scale-125"
+          icon="mdi-linkedin"
+        ></v-icon>
+      </a>
+      <a href="https://leetcode.com/sagnikjana2001/" target="_blank">
+        <v-icon
+          class="hover:text-blue-700 duration-300 hover:scale-125"
+          icon="mdi-code-tags"
+        ></v-icon>
+      </a>
+      <a href="https://twitter.com/sagnikjana2001" target="_blank">
+        <v-icon
+          class="hover:text-blue-700 duration-300 hover:scale-125"
+          icon="mdi-twitter"
+        ></v-icon>
+      </a>
+    </div>
+    <div class="space-x-4 mt-6 font-semibold">
+      <button
+        @click="openMailLink"
+        class="rounded-md py-2 px-3 bg-slate-700 text-white hover:scale-110 duration-300"
+      >
+        <v-icon icon="mdi-email"></v-icon>
+        Connect
+      </button>
+      <button
+        @click="openResumeLink"
+        class="rounded-md py-2 px-3 bg-slate-300 text-blue-950 hover:scale-110 duration-300"
+      >
+        <v-icon icon="mdi-tray-arrow-down"></v-icon>
+        Resume
+      </button>
     </div>
   </div>
 </template>
