@@ -42,9 +42,15 @@
         indeterminate
       ></v-progress-circular>
     </div>
-    <div v-else class="grid grid-cols-3 gap-10 mb-5">
+    <div
+      v-else
+      class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 mb-5"
+    >
       <div v-for="project in filteredProjects" :key="project.id">
-        <project-card :project="project"></project-card>
+        <project-card
+          class="max-w-96 mx-auto"
+          :project="project"
+        ></project-card>
       </div>
     </div>
     <button

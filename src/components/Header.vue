@@ -1,9 +1,11 @@
 <template>
   <div class="bg-slate-50 shadow-md sticky top-0 left-0 w-full z-20">
-    <div class="container py-4 flex justify-between items-center">
+    <div
+      class="container py-4 flex flex-col md:flex-row justify-between items-center"
+    >
       <h1 class="text-4xl font-semibold text-blue-900">Sagnik Jana</h1>
       <ul
-        class="flex items-center space-x-5 text-indigo-950 font-semibold text-lg"
+        class="flex mt-4 md:mt-0 items-center space-x-5 text-indigo-950 font-semibold text-lg"
       >
         <li><router-link class="nav-link" to="/home">Home</router-link></li>
         <li>

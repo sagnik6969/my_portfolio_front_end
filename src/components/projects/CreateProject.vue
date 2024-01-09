@@ -111,11 +111,14 @@
 import axios from "axios";
 // import { watch } from "vue";
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useToast } from "vue-toastification";
+import { useStore } from "vuex";
 
 const router = useRouter();
+const route = useRoute();
 const toast = useToast();
+const store = useStore();
 
 const title = ref("");
 const description = ref("");
@@ -139,16 +142,24 @@ const availableSkills = [
 const handleSubmit = () => {
   loading.value = true;
 
+  const token = store.getters.getToken;
+
   axios
-    .post("/api/projects", {
-      title: title.value,
-      description: description.value,
-      github_link: github_link.value,
-      live_link: live_link.value,
-      skills: skills.value,
-    })
-    .then((res) => {
-      console.log(res);
+    .post(
+      "/api/projects",
+      {
+        title: title.value,
+        description: description.value,
+        github_link: github_link.value,
+        live_link: live_link.value,
+        skills: skills.value,
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    )
+    .then(() => {
+      // console.log(res);
       toast.success("Project added successfully!!");
       router.push("/projects");
       loading.value = false;
@@ -157,6 +168,10 @@ const handleSubmit = () => {
       console.log(err.response.data);
 
       if (err.response.data.errors) errors.value = err.response.data.errors;
+      else if (err.response.data.message == "Unauthenticated.") {
+        toast.error("Please login to add a project");
+        router.push(`/login?redirect=${route.fullPath}`);
+      } else toast.error("Something went wrong. Please try after some time.");
       loading.value = false;
     });
 };

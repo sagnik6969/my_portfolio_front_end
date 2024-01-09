@@ -66,12 +66,12 @@ const store = createStore({
               new Date().getTime() -
               1000;
 
-            console.log(
-              new Date(res.data.expiration_time).getTime(),
-              new Date().getTime()
-            );
+            // console.log(
+            //   new Date(res.data.expiration_time).getTime(),
+            //   new Date().getTime()
+            // );
 
-            console.log(remainingTime);
+            // console.log(remainingTime);
 
             setTimeout(() => {
               context.dispatch("logout");
