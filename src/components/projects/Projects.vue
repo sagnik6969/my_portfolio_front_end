@@ -48,6 +48,7 @@
       </div>
     </div>
     <button
+      v-if="$store.getters.isLoggedIn"
       class="btn px-4 py-2 fixed bottom-10 right-10 text-xl text-blue-950 font-semibold bg-slate-300 rounded-full shadow-md hover:scale-110 duration-300"
       @click="() => $router.push('/projects/create')"
     >
@@ -83,7 +84,7 @@ onMounted(async () => {
   axios
     .get("/api/projects")
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       projects.value = res.data;
       filterProjects(searchText.value);
       isLoading.value = false;

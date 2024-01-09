@@ -53,19 +53,22 @@
 
 <script setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useToast } from "vue-toastification";
 import { useStore } from "vuex";
 
 const store = useStore();
 const toast = useToast();
 const router = useRouter();
+const route = useRoute();
 
 const email = ref("");
 const password = ref("");
 
 const loading = ref(false);
 const error = ref(null);
+
+const redirectUrl = route.query.redirect || "/";
 
 const handleSubmit = () => {
   loading.value = true;
@@ -78,7 +81,7 @@ const handleSubmit = () => {
     .then((res) => {
       loading.value = false;
       toast.success(res);
-      router.push("/");
+      router.replace(redirectUrl);
     })
     .catch((err) => {
       loading.value = false;

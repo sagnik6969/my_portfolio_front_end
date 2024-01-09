@@ -14,12 +14,18 @@
             v-if="!$store.getters.isLoggedIn"
             to="/login"
             class="inline-block rounded-3xl bg-slate-300 py-1 px-4 shadow-sm ml-4 hover:scale-105 duration-300"
-            >Login</router-link
+            >Admin</router-link
           >
           <button
             v-else
+            @click="logout"
             class="inline-block rounded-3xl bg-slate-300 py-1 px-4 shadow-sm ml-4 hover:scale-105 duration-300"
           >
+            <v-icon
+              class="animate-spin"
+              v-if="loading"
+              icon="mdi-loading"
+            ></v-icon>
             Logout
           </button>
         </li>
@@ -37,12 +43,28 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { ref } from "vue";
+import { useToast } from "vue-toastification";
 import { useStore } from "vuex";
 
 const store = useStore();
+const toast = useToast();
 
-const isLoggedIn = computed(() => store.getters.isLoggedIn);
+const loading = ref(false);
+
+const logout = () => {
+  loading.value = true;
+  store
+    .dispatch("logout")
+    .then((message) => {
+      toast.success(message);
+      loading.value = false;
+    })
+    .catch((error) => {
+      toast.error(error);
+      loading.value = false;
+    });
+};
 </script>
 
 <style scoped>
