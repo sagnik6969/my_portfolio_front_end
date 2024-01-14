@@ -108,12 +108,7 @@ onMounted(() => {
 });
 
 const openResumeLink = () => {
-  window
-    .open(
-      "https://drive.google.com/file/d/18bcKadCL7Cnudg02wJgt57U2_2gXycy2/view?usp=sharing",
-      "_blank"
-    )
-    .focus();
+  window.open("api/links/resume", "_blank").focus();
 };
 
 const openMailLink = () => {
