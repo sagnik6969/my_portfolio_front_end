@@ -12,6 +12,9 @@
           <router-link class="nav-link" to="/projects">Projects</router-link>
         </li>
         <li>
+          <router-link class="nav-link" to="/connect">Connect</router-link>
+        </li>
+        <li>
           <router-link
             v-if="!$store.getters.isLoggedIn"
             to="/login"

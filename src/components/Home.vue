@@ -64,6 +64,9 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const typedTextSpan = ref("");
 const typing = ref(false);
@@ -114,7 +117,8 @@ const openResumeLink = () => {
 };
 
 const openMailLink = () => {
-  window.open("mailto:sagnikjana2001@gmail.com", "_blank").focus();
+  router.push("/connect");
+  // window.open("mailto:sagnikjana2001@gmail.com", "_blank").focus();
 };
 </script>
 

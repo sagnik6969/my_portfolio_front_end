@@ -3,7 +3,10 @@ import Home from "./components/Home.vue";
 import Projects from "./components/projects/Projects.vue";
 import CreateProject from "./components/projects/CreateProject.vue";
 import Login from "./components/auth/Login.vue";
+import Connect from "./components/Connect/COnnect.vue";
+
 import store from "./store";
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -16,10 +19,9 @@ const router = createRouter({
       component: CreateProject,
     },
     { path: "/login", component: Login },
+    { path: "/connect", component: Connect },
   ],
 });
-
-// const store = useStore();
 
 router.beforeEach((to) => {
   if (to.meta.requireLogin) {
