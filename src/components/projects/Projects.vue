@@ -50,6 +50,7 @@
         <project-card
           class="max-w-96 mx-auto"
           :project="project"
+          @deleted="loadProjects"
         ></project-card>
       </div>
     </div>
@@ -75,7 +76,7 @@ const router = useRouter();
 const route = useRoute();
 
 const isInputOnFocus = ref(false);
-const isLoading = ref(true);
+const isLoading = ref(false);
 const projects = ref([]);
 const filteredProjects = ref([]);
 const searchText = ref("");
@@ -83,9 +84,9 @@ const searchText = ref("");
 const toggleIsInputOnFocus = () =>
   (isInputOnFocus.value = !isInputOnFocus.value);
 
-onMounted(async () => {
+const loadProjects = async () => {
+  isLoading.value = true;
   // console.log(route.query);
-  if (route.query.search) searchText.value = route.query.search;
   // console.log(route.query.search);
   axios
     .get("/api/projects")
@@ -99,6 +100,11 @@ onMounted(async () => {
       console.log(err);
       isLoading.value = false;
     });
+};
+
+onMounted(() => {
+  if (route.query.search) searchText.value = route.query.search;
+  loadProjects();
 });
 
 const filterProjects = (text) => {
