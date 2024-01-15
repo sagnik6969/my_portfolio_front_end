@@ -21,7 +21,7 @@
     </div>
     <img
       class="w-full h-52 object-cover"
-      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsk-4Y13Pf9giRlQoIj43QrGPNEVgDW0roWa9KfHuKFA&s"
+      :src="`${project.image_link}`"
       alt="Project Image"
     />
     <div class="p-5 flex flex-col flex-auto">

@@ -1,6 +1,10 @@
 <template>
   <div class="container">
-    <form @submit.prevent="handleSubmit" class="max-w-xl mx-auto mt-28 mb-28">
+    <form
+      @submit.prevent="handleSubmit"
+      class="max-w-xl mx-auto mt-28 mb-28"
+      enctype="multipart/form-data"
+    >
       <div class="mb-5">
         <label class="block text-sm font-medium text-gray-900 dark:text-white">
           <h1 class="text-lg mb-1">Title</h1>
@@ -69,6 +73,21 @@
       </div>
 
       <div class="mb-5">
+        <label class="block text-sm font-medium text-gray-900 dark:text-white">
+          <h1 class="text-lg mb-1">Upload Image</h1>
+          <input
+            type="file"
+            @change="(e) => (image_file = e.target.files[0])"
+            :class="{ 'border-red-400': errors && errors.image_file }"
+            required
+          />
+        </label>
+        <div class="text-red-600" v-if="errors.image_file">
+          {{ errors.image_file[0] }}
+        </div>
+      </div>
+
+      <div class="mb-5">
         <h1 class="text-lg mb-1 font-medium text-gray-900">Skills</h1>
         <!-- eslint-disable-next-line vue/require-v-for-key -->
         <div
@@ -110,7 +129,7 @@
 <script setup>
 import axios from "axios";
 // import { watch } from "vue";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useToast } from "vue-toastification";
 import { useStore } from "vuex";
@@ -122,9 +141,12 @@ const store = useStore();
 
 const title = ref("");
 const description = ref("");
+const image_file = ref();
 const github_link = ref("");
 const live_link = ref("");
 const skills = ref([]);
+
+watch(image_file, (newVal) => console.log(newVal));
 
 const errors = ref({});
 const loading = ref(false);
@@ -144,22 +166,25 @@ const handleSubmit = () => {
 
   const token = store.getters.getToken;
 
+  const formData = new FormData();
+  formData.append("title", title.value);
+  formData.append("description", description.value);
+  formData.append("github_link", github_link.value);
+  formData.append("live_link", live_link.value);
+  skills.value.forEach((skill) => formData.append("skills[]", skill));
+  formData.append("image_file", image_file.value);
+
+  console.log(formData);
+
   axios
-    .post(
-      "/api/projects",
-      {
-        title: title.value,
-        description: description.value,
-        github_link: github_link.value,
-        live_link: live_link.value,
-        skills: skills.value,
+    .post("/api/projects", formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
       },
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    )
-    .then(() => {
-      // console.log(res);
+    })
+    .then((res) => {
+      console.log(res);
       toast.success("Project added successfully!!");
       router.push("/projects");
       loading.value = false;
