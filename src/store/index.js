@@ -81,7 +81,7 @@ const store = createStore({
             resolve("logged in successfully!");
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
             reject(err.response.data.message);
           });
       });

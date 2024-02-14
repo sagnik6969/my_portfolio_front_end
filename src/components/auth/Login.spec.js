@@ -7,9 +7,10 @@ import { setupServer } from "msw/node";
 import store from "@/store";
 import router from "@/router";
 import vuetify from "@/vuetify";
+import Toast from "vue-toastification";
 
 import * as matchers from "@testing-library/jest-dom/matchers";
-import { http } from "msw";
+import { HttpResponse, http } from "msw";
 import userEvent from "@testing-library/user-event";
 expect.extend(matchers);
 
@@ -39,7 +40,7 @@ beforeEach(() => {
 const setUp = async () => {
   // router.push("/login");
   //await router.isReady();
-  const document = render(Login, {
+  const { container } = render(Login, {
     global: {
       plugins: [store, router, vuetify],
     },
@@ -47,7 +48,7 @@ const setUp = async () => {
 
   const user = userEvent.setup();
 
-  return { document, user };
+  return { document: container, user };
 };
 
 describe("LogIn", () => {
@@ -103,6 +104,41 @@ describe("LogIn", () => {
         expect(requestBody).toEqual({
           email: "a@b.c",
           password: "abcd",
+        });
+      });
+    });
+
+    describe("when credentials are incorrect", () => {
+      it("displays message received from backend", async () => {
+        server.use(
+          http.post("/api/login", async ({ request }) => {
+            requestBody = await request.json();
+            return HttpResponse.json(
+              {
+                message: "incorrect credentials",
+              },
+              { status: 400 }
+            );
+          })
+        );
+        // const { user } = await setUp();
+
+        render(Login, {
+          global: {
+            plugins: [store, router, vuetify, Toast],
+          },
+        });
+
+        const user = userEvent.setup();
+
+        const email = screen.getByLabelText("Email");
+        const password = screen.getByLabelText("Password");
+        const loginButton = screen.getByRole("button", { name: "Login" });
+        await user.type(email, "a@b.c");
+        await user.type(password, "abcd");
+        await user.click(loginButton);
+        await waitFor(() => {
+          expect(screen.getByText("incorrect credentials")).toBeInTheDocument();
         });
       });
     });
