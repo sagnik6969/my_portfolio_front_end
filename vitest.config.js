@@ -14,7 +14,7 @@ export default mergeConfig(
           inline: ["vuetify"],
         },
       },
-      //   globals: true,
+      globals: true, // => it is important => if we disable this option vitest will give unexpected results
       // so that we don't need to import vitest in every test file
       //   setupFiles: [
       // './setupTest.js'
