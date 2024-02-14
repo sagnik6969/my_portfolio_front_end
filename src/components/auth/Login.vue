@@ -6,7 +6,7 @@
           <h1 class="text-lg mb-1">Email</h1>
           <input
             v-model="email"
-            type="text"
+            type="email"
             class="border-slate-300 border-2 rounded-lg w-full"
             :class="{ 'border-red-400': error }"
             placeholder="user@example.com"

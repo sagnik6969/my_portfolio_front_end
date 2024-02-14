@@ -61,71 +61,69 @@ describe("Header", () => {
       const navLink = screen.getByRole("link", { name: "Admin" });
       expect(navLink).toHaveAttribute("href", "/login");
     });
+  });
 
-    describe("when user is logged in", () => {
-      it("removes the admin login link", async () => {
-        setUp();
-        const navLink = screen.getByRole("link", { name: "Admin" });
-        store.getters.isLoggedIn = true;
-        await waitFor(() => expect(navLink).not.toBeInTheDocument());
-      });
+  describe("when user is logged in", () => {
+    it("removes the admin login link", async () => {
+      setUp();
+      const navLink = screen.getByRole("link", { name: "Admin" });
+      store.getters.isLoggedIn = true;
+      await waitFor(() => expect(navLink).not.toBeInTheDocument());
+    });
 
-      it("displays logout button", async () => {
+    it("displays logout button", async () => {
+      setUp();
+      store.getters.isLoggedIn = true;
+      const button = await screen.findByRole("button", { name: "Logout" });
+      expect(button).toBeInTheDocument();
+    });
+
+    describe("when user clicks logout button", () => {
+      it("dispatches logout action on store", async () => {
+        // let useStoreInput;
+        // vi.mocked(useStore).mockReturnValue({
+        //   dispatch(input) {
+        //     useStoreInput = input;
+        //     return new Promise((resolve) => {
+        //       resolve();
+        //     });
+        //   },
+        // });
+        const mockFn = vi.fn().mockResolvedValue("success message");
+        vi.mocked(useStore).mockReturnValue({
+          dispatch: mockFn,
+        });
         setUp();
         store.getters.isLoggedIn = true;
         const button = await screen.findByRole("button", { name: "Logout" });
-        expect(button).toBeInTheDocument();
+        const user = userEvent.setup();
+        await user.click(button);
+        // expect(useStoreInput).toBe("logout");
+        expect(mockFn).toHaveBeenCalledOnce();
+        expect(mockFn).toHaveBeenCalledWith("logout");
       });
 
-      describe("when user clicks logout button", () => {
-        it("dispatches logout action on store", async () => {
-          // let useStoreInput;
-          // vi.mocked(useStore).mockReturnValue({
-          //   dispatch(input) {
-          //     useStoreInput = input;
-          //     return new Promise((resolve) => {
-          //       resolve();
-          //     });
-          //   },
-          // });
-          const mockFn = vi.fn().mockResolvedValue("success message");
+      describe("when logout action on progress", () => {
+        it("displays spinner", async () => {
+          let resolveFunction;
+          const mockFn = vi.fn().mockImplementation(() => {
+            return new Promise((resolve) => {
+              resolveFunction = resolve;
+            });
+          });
+
           vi.mocked(useStore).mockReturnValue({
             dispatch: mockFn,
           });
-          setUp();
+          const { container } = setUp();
           store.getters.isLoggedIn = true;
-          const button = await screen.findByRole("button", { name: "Logout" });
+          const button = await screen.findByRole("button", {
+            name: "Logout",
+          });
           const user = userEvent.setup();
           await user.click(button);
-          // expect(useStoreInput).toBe("logout");
-          expect(mockFn).toHaveBeenCalledOnce();
-          expect(mockFn).toHaveBeenCalledWith("logout");
-        });
-
-        describe("when logout action on progress", () => {
-          it("displays spinner", async () => {
-            let resolveFunction;
-            const mockFn = vi.fn().mockImplementation(() => {
-              return new Promise((resolve) => {
-                resolveFunction = resolve;
-              });
-            });
-
-            vi.mocked(useStore).mockReturnValue({
-              dispatch: mockFn,
-            });
-            const { container } = setUp();
-            store.getters.isLoggedIn = true;
-            const button = await screen.findByRole("button", {
-              name: "Logout",
-            });
-            const user = userEvent.setup();
-            await user.click(button);
-            expect(
-              container.querySelector(".animate-spin")
-            ).toBeInTheDocument();
-            resolveFunction("success message");
-          });
+          expect(container.querySelector(".animate-spin")).toBeInTheDocument();
+          resolveFunction("success message");
         });
       });
     });

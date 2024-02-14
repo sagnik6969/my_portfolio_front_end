@@ -54,7 +54,7 @@ const store = createStore({
             password: password,
           })
           .then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             context.commit("setToken", res.data.token);
             context.commit("setExpirationTime", res.data.expiration_time);
 
