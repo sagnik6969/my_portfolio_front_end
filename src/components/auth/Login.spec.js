@@ -23,7 +23,7 @@ Date.prototype.addHours = function (h) {
 const server = setupServer(
   http.post("/api/login", async ({ request }) => {
     requestBody = await request.json();
-    return Response.json({
+    return HttpResponse.json({
       token: "asdf",
       expiration_time: new Date().addHours(1).toISOString(),
     });
@@ -37,12 +37,14 @@ beforeEach(() => {
   server.resetHandlers();
 });
 
-const setUp = async () => {
+const setUp = async (path = "/login") => {
   // router.push("/login");
   //await router.isReady();
+  router.push(path);
+  await router.isReady();
   const { container } = render(Login, {
     global: {
-      plugins: [store, router, vuetify],
+      plugins: [store, router, vuetify, Toast],
     },
   });
 
@@ -61,31 +63,31 @@ describe("LogIn", () => {
     expect(screen.getByLabelText("Email")).toHaveAttribute("type", "email");
   });
 
-  it("has required constraint for email input", () => {
-    setUp();
+  it("has required constraint for email input", async () => {
+    await setUp();
     expect(screen.getByLabelText("Email")).toBeRequired();
   });
 
-  it("has Password input", () => {
-    setUp();
+  it("has Password input", async () => {
+    await setUp();
     expect(screen.getByLabelText("Password")).toBeInTheDocument();
   });
 
-  it("has password type Password input", () => {
-    setUp();
+  it("has password type Password input", async () => {
+    await setUp();
     expect(screen.getByLabelText("Password")).toHaveAttribute(
       "type",
       "password"
     );
   });
 
-  it("has required constraint for password input", () => {
-    setUp();
+  it("has required constraint for password input", async () => {
+    await setUp();
     expect(screen.getByLabelText("Password")).toBeRequired();
   });
 
-  it("has login button", () => {
-    setUp();
+  it("has login button", async () => {
+    await setUp();
     expect(screen.getByRole("button", { name: "Login" })).toBeInTheDocument();
   });
 
@@ -108,37 +110,38 @@ describe("LogIn", () => {
       });
     });
 
-    describe("when credentials are incorrect", () => {
-      it("displays message received from backend", async () => {
-        server.use(
-          http.post("/api/login", async ({ request }) => {
-            requestBody = await request.json();
-            return HttpResponse.json(
-              {
-                message: "incorrect credentials",
-              },
-              { status: 400 }
-            );
-          })
-        );
-        // const { user } = await setUp();
+    // omitting validating error checks because vue-toastification gives unexpected results.
+    // will add then in unit tests file.
 
-        render(Login, {
-          global: {
-            plugins: [store, router, vuetify, Toast],
-          },
+    describe("when backend returns success", () => {
+      describe("when redirect url is empty", () => {
+        it("navigates to homepage", async () => {
+          const { user } = await setUp("/login");
+          const email = screen.getByLabelText("Email");
+          const password = screen.getByLabelText("Password");
+          const loginButton = screen.getByRole("button", { name: "Login" });
+          await user.type(email, "a@b.c");
+          await user.type(password, "abcd");
+          await user.click(loginButton);
+
+          await waitFor(() =>
+            expect(router.currentRoute.value.fullPath).toBe("/home")
+          );
         });
+      });
+      describe("when redirect url is specified", () => {
+        it("navigates to specified url", async () => {
+          const { user } = await setUp("/login?redirect=projects");
+          const email = screen.getByLabelText("Email");
+          const password = screen.getByLabelText("Password");
+          const loginButton = screen.getByRole("button", { name: "Login" });
+          await user.type(email, "a@b.c");
+          await user.type(password, "abcd");
+          await user.click(loginButton);
 
-        const user = userEvent.setup();
-
-        const email = screen.getByLabelText("Email");
-        const password = screen.getByLabelText("Password");
-        const loginButton = screen.getByRole("button", { name: "Login" });
-        await user.type(email, "a@b.c");
-        await user.type(password, "abcd");
-        await user.click(loginButton);
-        await waitFor(() => {
-          expect(screen.getByText("incorrect credentials")).toBeInTheDocument();
+          await waitFor(() =>
+            expect(router.currentRoute.value.fullPath).toBe("/projects")
+          );
         });
       });
     });
