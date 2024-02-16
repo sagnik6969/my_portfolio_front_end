@@ -68,7 +68,7 @@ const password = ref("");
 const loading = ref(false);
 const error = ref(null);
 
-const redirectUrl = route.query.redirect || "/";
+const redirectUrl = route.query.redirect || "/home";
 
 const handleSubmit = () => {
   loading.value = true;
