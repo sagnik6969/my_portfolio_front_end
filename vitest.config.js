@@ -21,12 +21,12 @@ export default mergeConfig(
       // so that we don't need to include the files
       // in that we don't need to expect.extend(matchers) in every file
       //   ],
-      //   coverage: {
-      //     enabled: false,
-      //     // if enabled is true then it will generate a coverage report in every test
-      //     //when enabled: false =>  we can run coverage test by passing --coverage
-      //     provider: 'istanbul'
-      //   }
+      coverage: {
+        enabled: false,
+        // if enabled is true then it will generate a coverage report in every test
+        //when enabled: false =>  we can run coverage test by passing --coverage
+        provider: "istanbul",
+      },
     },
   })
 );
