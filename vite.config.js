@@ -13,12 +13,16 @@ export default defineConfig({
   },
   server: {
     proxy: {
-        //Focus here
-        '/api': {
-            target: 'http://127.0.0.1:8000',
-            changeOrigin: true,
-            // rewrite: (path) => { console.log(path); return path.replace('/^\/api/', '') }
-        }
-    }
-}
+      //Focus here
+      "/api": {
+        target: "http://127.0.0.1:8000",
+        changeOrigin: true,
+        // rewrite: (path) => { console.log(path); return path.replace('/^\/api/', '') }
+      },
+      "/sanctum": {
+        target: "http://127.0.0.1:8000",
+        changeOrigin: true,
+      },
+    },
+  },
 });

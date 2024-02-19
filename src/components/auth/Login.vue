@@ -52,6 +52,8 @@
 </template>
 
 <script setup>
+import axios from "axios";
+import { onMounted } from "vue";
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useToast } from "vue-toastification";
@@ -88,4 +90,8 @@ const handleSubmit = () => {
       toast.error(err);
     });
 };
+
+onMounted(async () => {
+  await axios.get("sanctum/csrf-cookie");
+});
 </script>
