@@ -38,13 +38,21 @@ import Paginator from "@/components/ui/Paginator.vue";
 import MessageCard from "./MessageCard.vue";
 import axios from "axios";
 import { onMounted, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+
+const route = useRoute();
+const router = useRouter();
 
 const isLoading = ref(true);
 const messages = ref([]);
 const paginator = ref({});
 
-const loadPage = (url = "/api/message") => {
+const loadPage = (url) => {
   isLoading.value = true;
+  const [, paramString] = url.split("?");
+  let pageNo = new URLSearchParams(paramString).get("page");
+  if (!pageNo) pageNo = 1;
+  router.push(`/connect/admin?page=${pageNo}`);
   axios
     .get(url)
     .then((res) => {
@@ -59,17 +67,8 @@ const loadPage = (url = "/api/message") => {
 };
 
 onMounted(() => {
-  axios
-    .get("/api/message")
-    .then((res) => {
-      messages.value = res.data.data;
-      paginator.value = res.data.meta;
-      console.log(res.data);
-    })
-    .catch((err) => console.log(err))
-    .finally(() => {
-      isLoading.value = false;
-    });
+  const pageNumber = route.query.page ? route.query.page : 1;
+  loadPage(`/api/message?page=${pageNumber}`);
 });
 
 const deleteMessage = (id) => {
