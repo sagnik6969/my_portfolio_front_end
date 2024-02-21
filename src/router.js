@@ -4,7 +4,7 @@ import Projects from "./components/projects/Projects.vue";
 import CreateProject from "./components/projects/CreateProject.vue";
 import Login from "./components/auth/Login.vue";
 import Connect from "./components/Connect/COnnect.vue";
-
+import MessageList from "./components/Messages/MessageList.vue";
 import store from "./store";
 
 const router = createRouter({
@@ -20,6 +20,11 @@ const router = createRouter({
     },
     { path: "/login", component: Login },
     { path: "/connect", component: Connect },
+    {
+      path: "/connect/admin",
+      component: MessageList,
+      meta: { requireLogin: true },
+    },
   ],
 });
 

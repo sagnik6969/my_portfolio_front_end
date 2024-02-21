@@ -107,8 +107,10 @@
 
 <script setup>
 import axios from "axios";
-import { ref } from "vue";
+import { onBeforeMount, ref } from "vue";
+import { useRouter } from "vue-router";
 import { useToast } from "vue-toastification";
+import { useStore } from "vuex";
 
 const toast = useToast();
 
@@ -117,6 +119,14 @@ const email = ref("");
 const message = ref("");
 const errors = ref({});
 const loading = ref(false);
+
+const store = useStore();
+const router = useRouter();
+onBeforeMount(() => {
+  if (store.getters.isLoggedIn) {
+    router.replace("/connect/admin");
+  }
+});
 
 const handleSubmit = () => {
   errors.value = {};
