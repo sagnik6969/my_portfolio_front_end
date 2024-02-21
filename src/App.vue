@@ -1,17 +1,34 @@
 <template>
-  <Header />
-  <router-view></router-view>
+  <div
+    v-if="isLoading"
+    class="flex justify-center items-center text-slate-700 w-full h-screen"
+  >
+    <v-progress-circular
+      :size="70"
+      :width="7"
+      color="purple"
+      indeterminate
+    ></v-progress-circular>
+  </div>
+  <template v-else>
+    <Header />
+    <router-view></router-view>
+  </template>
 </template>
 
 <script setup>
 import Header from "./components/Header.vue";
-import { onBeforeMount } from "vue";
+import { onBeforeMount, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
 
-onBeforeMount(() => {
-  store.dispatch("tryLogIn");
+const isLoading = ref(true);
+
+onMounted(() => {
+  store.dispatch("tryLogIn").then(() => {
+    isLoading.value = false;
+  });
   // console.log(store.getters.isLoggedIn);
 });
 </script>

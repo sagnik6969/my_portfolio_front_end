@@ -33,14 +33,19 @@ const store = createStore({
   },
   actions: {
     tryLogIn(context) {
-      axios
-        .get("/api/user")
-        .then((res) => {
-          context.commit("setUser", res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      return new Promise((resolve) => {
+        axios
+          .get("/api/user")
+          .then((res) => {
+            context.commit("setUser", res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+          .finally(() => {
+            resolve();
+          });
+      });
     },
 
     login(context, payload) {

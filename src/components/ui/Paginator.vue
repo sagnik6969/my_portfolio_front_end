@@ -15,8 +15,8 @@
         :class="[
           {
             'bg-slate-500 text-slate-100 hover:bg-slate-600': link.active,
-            'rounded-l-sm': idx == 0,
-            'rounded-r-sm': idx == filteredArray.length - 1,
+            'rounded-l': idx == 0,
+            'rounded-r': idx == filteredArray.length - 1,
             'border-l-0': idx != 0,
           },
         ]"
