@@ -17,11 +17,14 @@
           ></v-progress-circular>
         </div>
         <div v-else class="mt-5 bg-slate-50 shadow rounded-md">
-          <message-card
-            v-for="message in messages"
-            :message="message"
-            :key="message.id"
-          ></message-card>
+          <transition-group tag="div" name="message-list">
+            <message-card
+              v-for="message in messages"
+              :message="message"
+              :key="message.id"
+              @messageDeleted="deleteMessage"
+            ></message-card>
+          </transition-group>
         </div>
       </div>
     </div>
@@ -49,4 +52,21 @@ onMounted(() => {
       isLoading.value = false;
     });
 });
+
+const deleteMessage = (id) => {
+  messages.value = messages.value.filter((message) => {
+    return message.id != id;
+  });
+};
 </script>
+
+<style scoped>
+.message-list-leave-from {
+  /* opacity: 0%; */
+  position: absolute;
+}
+
+.message-list-move {
+  transition: transform 500ms ease-out;
+}
+</style>

@@ -12,7 +12,7 @@
           <router-link class="nav-link" to="/projects">Projects</router-link>
         </li>
         <li>
-          <router-link class="nav-link" to="/connect">Connect</router-link>
+          <router-link class="nav-link" :to="connectLink">Connect</router-link>
         </li>
         <li>
           <router-link
@@ -48,7 +48,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useToast } from "vue-toastification";
 import { useStore } from "vuex";
 
@@ -70,6 +70,10 @@ const logout = () => {
       loading.value = false;
     });
 };
+
+const connectLink = computed(() => {
+  return store.getters.isLoggedIn ? "/connect/admin" : "/connect";
+});
 </script>
 
 <style scoped>
