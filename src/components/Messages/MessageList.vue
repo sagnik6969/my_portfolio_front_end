@@ -25,6 +25,7 @@
               @messageDeleted="deleteMessage"
             ></message-card>
           </transition-group>
+          <paginator :pagination="paginator" @loadPage="loadPage"></paginator>
         </div>
       </div>
     </div>
@@ -33,18 +34,36 @@
 
 <script setup>
 import SearchBox from "@/components/ui/SearchBox.vue";
+import Paginator from "@/components/ui/Paginator.vue";
 import MessageCard from "./MessageCard.vue";
 import axios from "axios";
 import { onMounted, ref } from "vue";
 
 const isLoading = ref(true);
 const messages = ref([]);
+const paginator = ref({});
+
+const loadPage = (url = "/api/message") => {
+  isLoading.value = true;
+  axios
+    .get(url)
+    .then((res) => {
+      messages.value = res.data.data;
+      paginator.value = res.data.meta;
+      console.log(res.data);
+    })
+    .catch((err) => console.log(err))
+    .finally(() => {
+      isLoading.value = false;
+    });
+};
 
 onMounted(() => {
   axios
     .get("/api/message")
     .then((res) => {
       messages.value = res.data.data;
+      paginator.value = res.data.meta;
       console.log(res.data);
     })
     .catch((err) => console.log(err))
