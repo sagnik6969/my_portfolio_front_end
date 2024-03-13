@@ -1,5 +1,5 @@
 <template>
-  <div
+  <!-- <div
     v-if="isLoading"
     class="flex justify-center items-center text-slate-700 w-full h-screen"
   >
@@ -9,28 +9,28 @@
       color="purple"
       indeterminate
     ></v-progress-circular>
-  </div>
-  <template v-else>
-    <Header />
-    <router-view></router-view>
-  </template>
+  </div> -->
+  <!-- <template> -->
+  <Header />
+  <router-view></router-view>
+  <!-- </template> -->
 </template>
 
 <script setup>
 import Header from "./components/Header.vue";
-import { onBeforeMount, onMounted, ref } from "vue";
-import { useStore } from "vuex";
+// import { onBeforeMount, onMounted, ref } from "vue";
+// import { useStore } from "vuex";
 
-const store = useStore();
+// const store = useStore();
 
-const isLoading = ref(true);
+// const isLoading = ref(true);
 
-onMounted(() => {
-  store.dispatch("tryLogIn").then(() => {
-    isLoading.value = false;
-  });
-  // console.log(store.getters.isLoggedIn);
-});
+// onMounted(() => {
+//   store.dispatch("tryLogIn").then(() => {
+//     isLoading.value = false;
+//   });
+//   // console.log(store.getters.isLoggedIn);
+// });
 </script>
 <style>
 .container {

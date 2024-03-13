@@ -10,7 +10,7 @@
       </h1>
     </div>
     <div class="flex flex-col-reverse md:flex-row md:space-x-28 text-gray-600">
-      <form @submit.prevent="handleSubmit" class="flex-1">
+      <!-- <form @submit.prevent="handleSubmit" class="flex-1">
         <div class="mb-5">
           <label>
             <h1 class="font-semibold mb-1">Email</h1>
@@ -68,7 +68,7 @@
             <v-icon v-else icon="mdi-send"></v-icon>
           </button>
         </div>
-      </form>
+      </form> -->
       <div class="flex-1 mb-5 md:mb-0">
         <ul class="space-y-2">
           <li

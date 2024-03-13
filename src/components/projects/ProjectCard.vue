@@ -2,23 +2,6 @@
   <div
     class="relative flex flex-col bg-white rounded-xl shadow-xl duration-300 w-full h-full overflow-hidden hover:scale-105"
   >
-    <div
-      v-if="$store.getters.isLoggedIn"
-      class="absolute top-4 right-4 bg-slate-300 py-1 px-1 rounded-md space-x-2 text-slate-700 flex justify-center items-center"
-    >
-      <button
-        @click="deleteProject(project.id)"
-        class="hover:text-blue-600 hover:scale-105 duration-300 hover:first:inline-block"
-      >
-        <v-icon class="animate-spin" v-if="loading" icon="mdi-loading"></v-icon>
-        <v-icon v-else icon="mdi-delete"></v-icon>
-      </button>
-      <button
-        class="hover:text-blue-600 hover:scale-105 duration-300 hover:first:inline-block"
-      >
-        <v-icon icon="mdi-pencil"></v-icon>
-      </button>
-    </div>
     <img
       class="w-full h-52 object-cover"
       :src="`${project.image_link}`"
@@ -51,7 +34,8 @@
         </button>
         <button
           @click="openLinkInANewWindow(project.live_link)"
-          class="rounded-md py-2 px-3 bg-slate-300 text-blue-950 hover:scale-110 duration-300"
+          :disabled="!project.live_link"
+          class="rounded-md py-2 px-3 bg-slate-300 text-blue-950 hover:scale-110 duration-300 disabled:cursor-not-allowed disabled:opacity-60"
         >
           <v-icon icon="mdi-open-in-new"></v-icon>
           Live Link

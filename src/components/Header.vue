@@ -14,8 +14,8 @@
         <li>
           <router-link class="nav-link" :to="connectLink">Connect</router-link>
         </li>
-        <li>
-          <router-link
+        <!-- <li> -->
+        <!-- <router-link
             v-if="!$store.getters.isLoggedIn"
             to="/login"
             class="inline-block rounded-3xl bg-slate-300 py-1 px-4 shadow-sm ml-4 hover:scale-105 duration-300"
@@ -33,7 +33,7 @@
             ></v-icon>
             Logout
           </button>
-        </li>
+        </li> -->
         <!-- <li>
           <router-link class="nav-link" to="/contact">Contact</router-link>
         </li>
@@ -49,27 +49,27 @@
 
 <script setup>
 import { computed, ref } from "vue";
-import { useToast } from "vue-toastification";
+// import { useToast } from "vue-toastification";
 import { useStore } from "vuex";
 
 const store = useStore();
-const toast = useToast();
+// const toast = useToast();
 
-const loading = ref(false);
+// const loading = ref(false);
 
-const logout = () => {
-  loading.value = true;
-  store
-    .dispatch("logout")
-    .then((message) => {
-      toast.success(message);
-      loading.value = false;
-    })
-    .catch((error) => {
-      toast.error(error);
-      loading.value = false;
-    });
-};
+// const logout = () => {
+//   loading.value = true;
+//   store
+//     .dispatch("logout")
+//     .then((message) => {
+//       toast.success(message);
+//       loading.value = false;
+//     })
+//     .catch((error) => {
+//       toast.error(error);
+//       loading.value = false;
+//     });
+// };
 
 const connectLink = computed(() => {
   return store.getters.isLoggedIn ? "/connect/admin" : "/connect";

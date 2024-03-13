@@ -108,7 +108,7 @@ onMounted(() => {
 });
 
 const openResumeLink = () => {
-  window.open("api/links/resume", "_blank").focus();
+  window.open("/Sagnik_Jana.pdf", "_blank").focus();
 };
 
 const openMailLink = () => {
